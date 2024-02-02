@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-""" 2. Hypermedia pagination"""
+""" Simple pagination"""
 
 import csv
 import math
-from typing import List, Dict, Any, Union
+from typing import List
 
 
 def index_range(page: int, page_size: int) -> tuple:
@@ -49,19 +49,15 @@ class Server:
                     break
         return self.__dataset
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
-        """Method that takes two integer arguments page with default value 1
-        and page_size with default value 10"""
-        assert isinstance(page, int) and isinstance(page_size, int)
-        assert page > 0 and page_size > 0
-        page_data = self.get_page(page, page_size)
-        start, end = index_range(page, page_size)
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
+        """ Return a dictionary"""
+        data = self.get_dataset(page, page_size)
         total_pages = math.ceil(len(self.__dataset) / page_size)
         return {
-            'page_size': len(page_data),
-            'page': page,
-            'data': page_data,
-            'next_page': page + 1 if end < len(self.__dataset) else None,
-            'prev_page': page - 1 if start > 0 else None,
-            'total_pages': total_pages
+            "page_size": len(data),
+            "page": page,
+            "data": data,
+            "next_page": page + 1 if page < total_pages else None,
+            "prev_page": page - 1 if page > 1 else None,
+            "total_pages": total_pages
         }
