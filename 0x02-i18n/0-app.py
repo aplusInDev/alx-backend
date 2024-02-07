@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Basic Babel setup"""
+
 from flask import Flask, render_template
 
 
