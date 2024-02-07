@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Basic Babel setup"""
-
 from flask import Flask, render_template
 
 
@@ -14,4 +13,4 @@ def index() -> str:
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
