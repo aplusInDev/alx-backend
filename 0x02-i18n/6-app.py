@@ -2,6 +2,7 @@
 '''Basic app with only single route'''
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
+from typing import Union, Dict
 
 
 class Config:
@@ -23,7 +24,7 @@ users = {
 }
 
 
-def get_user():
+def get_user() -> Union[Dict[int, Dict[str, str]], None]:
     '''Mocks logged in user'''
     ID = request.args.get('login_as')
     if ID and int(ID) in users:
@@ -32,14 +33,14 @@ def get_user():
 
 
 @app.before_request
-def before_request():
+def before_request() -> None:
     '''Before request'''
     user = get_user()
     g.user = user
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     '''Gets the locale language'''
     url_locale = request.args.get('locale', None)
     if url_locale and url_locale in app.config['LANGUAGES']:
