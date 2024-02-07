@@ -24,9 +24,12 @@ users = {
 }
 
 
-def get_user(user_id: int) -> Union[Dict[str, Union[str, None]], None]:
-    """ Get user details based on user ID """
-    return users.get(user_id)
+def get_user() -> Union[Dict[int, Dict[str, str]], None]:
+    '''Mocks logged in user'''
+    ID = request.args.get('login_as')
+    if ID and int(ID) in users:
+        return users[int(ID)]
+    return None
 
 
 @app.before_request
